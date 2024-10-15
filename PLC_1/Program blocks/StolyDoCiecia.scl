@@ -1,0 +1,14 @@
+﻿FUNCTION_BLOCK "StolyDoCiecia"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+
+BEGIN
+	//wywołanie bloku funkcyjnego dla 1 stołu
+	"StanowiskoCiecia_1_DB"(xSygnalWyzwalajacy:="DI".xCzujnikKrancowyNoza,
+	                        xResetLicznika:="DI".xResetLicznika,
+	                        xZlecenieWToku=>"DO".xLampkaZielona,
+	                        xZlecenieZakonczone=>"DO".xLampkaCzerwona);
+	
+	
+END_FUNCTION_BLOCK
+

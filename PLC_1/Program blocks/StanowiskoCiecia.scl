@@ -1,0 +1,37 @@
+﻿FUNCTION_BLOCK "StanowiskoCiecia"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iLiczbaCiecZadana : Int;
+      xSygnalWyzwalajacy : Bool;
+      xResetLicznika : Bool;
+   END_VAR
+
+   VAR_OUTPUT 
+      xZlecenieWToku : Bool;
+      xZlecenieZakonczone : Bool;
+   END_VAR
+
+   VAR_IN_OUT 
+      iLicznikCiec : Int;
+   END_VAR
+
+   VAR 
+      xBitPamieci : Bool;
+   END_VAR
+
+
+BEGIN
+	// Wykrycie zbocza opadającego sygnalu noża oraz inkrementacja licznika
+	#iLicznikCiec := #iLicznikCiec + BOOL_TO_INT(NOT #xSygnalWyzwalajacy AND #xBitPamieci);
+	
+	// Reset licznika
+	#iLicznikCiec := #iLicznikCiec * BOOL_TO_INT(NOT #xResetLicznika);
+	
+	// Wizualizacja statusu zlecenia
+	#xZlecenieWToku := #iLicznikCiec < #iLiczbaCiecZadana;
+	#xZlecenieZakonczone := NOT #xZlecenieWToku;
+	
+	#xBitPamieci := #xSygnalWyzwalajacy;
+END_FUNCTION_BLOCK
+
